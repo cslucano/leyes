@@ -5,6 +5,7 @@ use AppBundle\Entity\Ley;
 use AppBundle\LeyQueryFactory;
 use Elastica\Facet\Terms;
 use Elastica\Query;
+use Elastica\ResultSet;
 use Elastica\Type;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,12 +61,34 @@ class LeyesController extends BaseController
 
         /** @var Type $type */
         $type = $this->container->get('fos_elastica.index.app.leyes');
-        $results = $type->search($query);
+        $result = $type->search($query);
+//        var_dump($result); die();
 
-        $facets = $results->getFacets();
-        return new Response(json_encode($facets));
+        $content = $this->getContent($result, $queryString);
 
+        return new Response($this->serialize($content));
+    }
 
-        return new Response($this->serialize($results));
+    public function getContent(ResultSet $result, $queryString)
+    {
+        $content = [];
+        $results = $result->getResults();
+        $content['root'] = [
+            'title' => $queryString,
+            'count' => $result->getTotalHits()
+        ];
+
+        $facets = $result->getFacets();
+        foreach($facets as $fname => $fcontent) {
+            $content[$fname] = [];
+            foreach($fcontent['terms'] as $fterm) {
+                $content[$fname][] = [
+                    'title' => $fterm['term'],
+                    'count' => $fterm['count']
+                ];
+            }
+        }
+
+        return $content;
     }
 }
