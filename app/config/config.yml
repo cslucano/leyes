@@ -75,3 +75,71 @@ swiftmailer:
 fos_rest:
     routing_loader:
         default_format: json
+
+fos_elastica:
+    clients:
+        default: { host: 127.0.0.1, port: 9200 }
+    indexes:
+        app:
+            settings:
+                analysis:
+                    analyzer:
+                        semicolon:
+                            type: pattern
+                            pattern: ";"
+                        comma:
+                            type: pattern
+                            pattern: ","
+            types:
+                leyes:
+                    mappings:
+                        adherentes: ~
+                        adherentes_mail: ~
+                        codini: ~
+                        codinisecu: ~
+                        codini_web: ~
+                        codini_web_1: ~
+                        codultesta:   { analyzer: comma }
+                        descomi:   { analyzer: comma }
+                        desgrupparla:   { analyzer: comma }
+                        desgruppol:   { analyzer: comma }
+                        deslegis: ~
+                        desperio: ~
+                        despropo: ~
+                        dessegui2_1: ~
+                        distrito: ~
+                        fecpres: ~
+                        fecultimo: ~
+                        fecha_1: ~
+                        nomcongre: { analyzer: comma }
+                        nomcongrecoautor: ~
+                        nomcongre_mail: ~
+                        nombredelabasededatos: ~
+                        nombredelacomision:   { analyzer: comma }
+                        nombredelenlace: ~
+                        nombredelestado: ~
+                        nombredelformulario:  { analyzer: comma }
+                        nombredelperiodoparlamentario:  { analyzer: comma }
+                        nombredelgrupoparlamentario:  { analyzer: comma }
+                        numley: ~
+                        numleyweb: ~
+                        numerodeproyectoley: ~
+                        promulgado: ~
+                        sumini: ~
+                        titini: ~
+                        titley: ~
+                        titulo: ~
+                        conexp: ~
+                        conquechua: ~
+                        contex: ~
+                        fechapre: ~
+                    persistence:
+                        # the driver can be orm, mongodb or propel
+                        # listener and finder are not supported by
+                        # propel and should be removed
+                        driver: orm
+                        model: AppBundle\Entity\Ley
+                        provider: ~
+                        listener:
+                            immediate: ~
+                        finder: ~
