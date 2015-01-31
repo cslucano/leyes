@@ -2,7 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ley;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class LeyesController extends BaseController
 {
@@ -10,6 +10,6 @@ class LeyesController extends BaseController
     {
         $leyes = $this->getDoctrine()->getRepository(Ley::class)->findAll();
 
-        return new JsonResponse($this->serialize($leyes));
+        return new Response($this->serialize($leyes));
     }
 }
