@@ -143,3 +143,10 @@ fos_elastica:
                         listener:
                             immediate: ~
                         finder: ~
+
+nelmio_cors:
+    paths:
+        '^/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']

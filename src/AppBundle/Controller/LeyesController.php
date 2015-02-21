@@ -72,8 +72,7 @@ class LeyesController extends BaseController
     public function getContent(ResultSet $result, $queryString)
     {
         $content = [];
-        $results = $result->getResults();
-        $content['root'] = [
+        $content['root'][] = [
             'title' => $queryString,
             'count' => $result->getTotalHits()
         ];
